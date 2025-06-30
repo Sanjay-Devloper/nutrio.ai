@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | Diet Planner</title>
+  <style>
+    body {
+      background: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .auth-container {
+      background: #1d1d1d;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px green;
+      width: 300px;
+      text-align: center;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    input {
+      background: #333;
+      color: #fff;
+    }
+    button {
+      background: #28a745;
+      color: white;
+      cursor: pointer;
+    }
+    .toggle {
+      margin-top: 10px;
+      color: #ccc;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .error {
+      margin-top: 10px;
+      color: red;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-container">
+    <h2 id="formTitle">Login</h2>
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button id="authBtn">Login</button>
+    <div class="toggle" id="toggleLink">Don't have an account? Sign up</div>
+    <div class="error" id="errorMsg"></div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js';
+
+    const supabase = createClient(
+      'https://lbhxjtnsdydpdglqqsuy.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxiaHhqdG5zZHlkcGRnbHFxc3V5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA3NDE2NjUsImV4cCI6MjA2NjMxNzY2NX0.aTINbxO-X-ivhO9iFAVVEggfLM9s1666W-SWnKimCd4'
+    );
+
+    let isLogin = true;
+
+    document.getElementById("toggleLink").addEventListener("click", toggleForm);
+    document.getElementById("authBtn").addEventListener("click", handleAuth);
+
+    function toggleForm() {
+      isLogin = !isLogin;
+      document.getElementById("formTitle").innerText = isLogin ? "Login" : "Sign Up";
+      document.getElementById("authBtn").innerText = isLogin ? "Login" : "Sign Up";
+      document.getElementById("toggleLink").innerText = isLogin
+        ? "Don't have an account? Sign up"
+        : "Already have an account? Login";
+      document.getElementById("errorMsg").innerText = "";
+    }
+
+    async function handleAuth() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const errorMsg = document.getElementById("errorMsg");
+
+      if (!email || !password) {
+        errorMsg.innerText = "Please fill in all fields.";
+        return;
+      }
+
+      try {
+        if (isLogin) {
+          const { error } = await supabase.auth.signInWithPassword({ email, password });
+          if (error) {
+            errorMsg.innerText = "Invalid credentials. Please try again.";
+          } else {
+            // ✅ Redirect on successful login
+            window.location.href = "index.html";
+          }
+        } else {
+          const { error } = await supabase.auth.signUp({ email, password });
+          if (error) {
+            errorMsg.innerText = error.message;
+          } else {
+            alert("Signup successful! Please login.");
+            toggleForm();
+          }
+        }
+      } catch (err) {
+        errorMsg.innerText = "Something went wrong. Try again.";
+      }
+    }
+  </script>
+</body>
+</html>

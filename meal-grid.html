@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weekly Meal Planner</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000;
+      color: white;
+      margin: 40px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #4CAF50;
+      font-size: 2.5rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      background-color: black;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #444;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    td:first-child,
+    th:first-child {
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bold;
+    }
+
+    td {
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>Weekly Meal Planner</h1>
+  <table id="mealTable"></table>
+
+  <script>
+    const mealOrder = [
+      "Early Morning",
+      "Breakfast",
+      "Mid-Morning",
+      "Lunch",
+      "Evening Snack",
+      "Pre-Dinner",
+      "Dinner"
+    ];
+
+    const days = [
+      "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+    ];
+
+    async function loadData() {
+      try {
+        const response = await fetch("/static/result.txt");
+        const text = await response.text();
+        const lines = text.split("\n").map(line => line.trim()).filter(line => line !== "");
+
+        const data = {};
+        let currentDay = "";
+
+        for (const line of lines) {
+          if (days.includes(line)) {
+            currentDay = line;
+            data[currentDay] = {};
+          } else if (line.includes(":")) {
+            const [meal, mealText] = line.split(/:(.+)/);
+            if (currentDay) {
+              data[currentDay][meal.trim()] = mealText.trim();
+            }
+          }
+        }
+
+        return data;
+      } catch (err) {
+        console.error("Failed to load data:", err);
+      }
+    }
+
+    function renderTable(data) {
+      const table = document.getElementById("mealTable");
+
+      const headerRow = document.createElement("tr");
+      const firstTh = document.createElement("th");
+      firstTh.textContent = "Meal / Day";
+      headerRow.appendChild(firstTh);
+
+      for (const day of days) {
+        const th = document.createElement("th");
+        th.textContent = day;
+        headerRow.appendChild(th);
+      }
+      table.appendChild(headerRow);
+
+      for (const meal of mealOrder) {
+        const row = document.createElement("tr");
+        const mealCell = document.createElement("td");
+        mealCell.textContent = meal;
+        row.appendChild(mealCell);
+
+        for (const day of days) {
+          const cell = document.createElement("td");
+          cell.textContent = data[day]?.[meal] || "-";
+          row.appendChild(cell);
+        }
+
+        table.appendChild(row);
+      }
+    }
+
+    loadData().then(renderTable);
+  </script>
+</body>
+</html>

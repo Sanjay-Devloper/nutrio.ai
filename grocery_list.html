@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Grocery List</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #111;
+      color: white;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #4CAF50;
+      margin-bottom: 30px;
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .category-card {
+      background-color: #1a1a1a;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #333;
+    }
+
+    .category-card h3 {
+      margin-top: 0;
+      margin-bottom: 15px;
+      color: #4CAF50;
+      font-size: 1.2rem;
+      border-bottom: 1px solid #333;
+      padding-bottom: 5px;
+    }
+
+    .ingredients-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .ingredient {
+      background-color: #222;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 0.9rem;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+
+    .ingredient:hover {
+      background-color: #333;
+    }
+
+    .ingredient.checked {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .ingredient .count {
+      display: block;
+      margin-top: 5px;
+      font-size: 0.75rem;
+      color: #bbb;
+    }
+  </style>
+</head>
+<body>
+  <h2>Weekly Grocery List</h2>
+  <div class="categories-grid">
+<div class="category-card"><h3>Fruits</h3><div class="ingredients-grid">
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Apple<span class="count">1</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Banana<span class="count">2</span>
+        </div>
+        </div></div><div class="category-card"><h3>Dairy</h3><div class="ingredients-grid">
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Butter<span class="count">2</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Cheese<span class="count">2</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Cottage Cheese<span class="count">1</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Curd<span class="count">1</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Greek Yogurt<span class="count">2</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Paneer<span class="count">2</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Yogurt<span class="count">2</span>
+        </div>
+        </div></div><div class="category-card"><h3>Protein</h3><div class="ingredients-grid">
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Chicken<span class="count">9</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Chickpeas<span class="count">1</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Dal<span class="count">1</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Egg<span class="count">4</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Fish<span class="count">2</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Mutton<span class="count">2</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Omelette<span class="count">1</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Peanut<span class="count">3</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Protein Shake<span class="count">7</span>
+        </div>
+        </div></div><div class="category-card"><h3>Grains</h3><div class="ingredients-grid">
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Dosa<span class="count">1</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Idli<span class="count">1</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Paratha<span class="count">2</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Poha<span class="count">1</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Rice<span class="count">6</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Roti<span class="count">4</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Upma<span class="count">1</span>
+        </div>
+        </div></div><div class="category-card"><h3>Nuts & Seeds</h3><div class="ingredients-grid">
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Almonds<span class="count">1</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Peanut Butter<span class="count">2</span>
+        </div>
+        
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Seeds<span class="count">1</span>
+        </div>
+        </div></div><div class="category-card"><h3>Others</h3><div class="ingredients-grid">
+        <div class="ingredient" onclick="this.classList.toggle('checked')">
+          Vegetables<span class="count">1</span>
+        </div>
+        </div></div>
+  </div>
+</body>
+</html>

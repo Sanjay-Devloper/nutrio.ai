@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NutriPlan - Start</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<style>
+  body {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  background-color: #111;
+  padding: 2rem 3rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  max-width: 600px;
+}
+
+.badge {
+  background-color: #1e1e1e;
+  color: #4CAF50;
+  font-size: 0.85rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 2rem;
+  display: inline-block;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  color: #4CAF50; /* GREEN for main title */
+}
+
+.highlight {
+  color: #4CAF50;
+}
+
+.description {
+  font-size: 1rem;
+  color: white; /* Keep the supporting paragraph white */
+  margin-bottom: 1.5rem;
+}
+
+.features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+.features li {
+  text-align: left;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+  color: #4CAF50; /* GREEN for each listed feature */
+}
+
+.start-btn {
+  display: inline-block;
+  background-color: #4CAF50;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.start-btn:hover {
+  background-color: #2e7d32;
+}
+.main-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.app-name {
+  font-size: 6rem;
+  font-weight: 800;
+  color: #4CAF50;
+  font-family: 'Segoe UI', sans-serif;
+  letter-spacing: 1px;
+  flex-shrink: 0;
+  margin-right: 4rem; /* Creates a nice wide space */
+  margin-left: 4rem;
+}
+
+.container {
+  background-color: #111;
+  padding: 2rem 3rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  max-width: 600px;
+  margin-left: auto;
+}
+
+  
+</style>
+
+<body>
+  <div class="main-wrapper">
+    <h1 class="app-name">Nutrio.Ai</h1>
+  <div class="container">
+    <div class="badge">
+      🤖 AI-Powered Nutrition Planning
+    </div>
+    <h1>Your Personal <span class="highlight">AI Dietitian</span></h1>
+    <p class="description">
+      Get personalized meal plans tailored to your goals, preferences, and health needs.
+      From muscle gain to diabetes management, let AI create the perfect nutrition strategy for you.
+    </p>
+    <ul class="features">
+      <li>✅ Personalized meal plans in seconds</li>
+      <li>✅ Auto-generated grocery lists</li>
+      <li>✅ Track progress with AI insights</li>
+    </ul>
+    <div class="buttons">
+      <a href="auth.html" class="start-btn">Start Your Journey →</a>
+    </div>
+  </div>
+</body>
+</html>

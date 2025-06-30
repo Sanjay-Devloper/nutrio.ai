@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Body Metrics</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0d0d0d;
+      color: white;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      color: #4CAF50;
+      margin-bottom: 20px;
+    }
+
+    .top-metrics {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .metric-box {
+      background-color: #1a1a1a;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid #333;
+      min-width: 200px;
+      transition: transform 0.3s ease;
+    }
+
+    .metric-box:hover {
+      transform: scale(1.05);
+    }
+
+    .metric-title {
+      font-size: 1.2rem;
+      color: #4CAF50;
+      margin-bottom: 8px;
+    }
+
+    .metric-value {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    .metric-desc {
+      font-size: 0.9rem;
+      color: #aaa;
+      margin-top: 6px;
+    }
+
+    .bottom-section {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .left-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .chart-container {
+      flex: 1;
+      max-width: 400px;
+    }
+
+    canvas {
+      background-color: #111;
+      padding: 20px;
+      border-radius: 12px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Body Metrics Calculator</h1>
+
+  <div class="top-metrics">
+    <div class="metric-box">
+      <div class="metric-title">BMI</div>
+      <div id="bmi" class="metric-value">-</div>
+      <div class="metric-desc">(Body Mass Index)</div>
+    </div>
+    <div class="metric-box">
+      <div class="metric-title">BMR</div>
+      <div id="bmr" class="metric-value">-</div>
+      <div class="metric-desc">(Basal Metabolic Rate)</div>
+    </div>
+    <div class="metric-box">
+      <div class="metric-title">TDEE</div>
+      <div id="tdee" class="metric-value">-</div>
+      <div class="metric-desc">(Total Daily Energy Expenditure)</div>
+    </div>
+  </div>
+
+  <div class="bottom-section">
+    <div class="left-stack">
+      <div class="metric-box">
+        <div class="metric-title">Protein</div>
+        <div id="protein" class="metric-value">-</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-title">Carbohydrates</div>
+        <div id="carbs" class="metric-value">-</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-title">Fats</div>
+        <div id="fats" class="metric-value">-</div>
+      </div>
+    </div>
+    <div class="chart-container">
+      <canvas id="macroChart"></canvas>
+    </div>
+  </div>
+
+  <script>
+    window.onload = function () {
+      const data = JSON.parse(localStorage.getItem("userData"));
+      if (!data) {
+        document.body.innerHTML = "<p style='color:red;'>User data missing. Please fill details on the previous page.</p>";
+        return;
+      }
+
+      const { age, gender, height, weight } = data;
+      const activity = "sedentary";
+
+      const heightM = height / 100;
+      const bmi = weight / (heightM * heightM);
+
+      let bmr;
+      if (gender.toLowerCase() === "male") {
+        bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+      } else {
+        bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+      }
+
+      const activityFactor = {
+        sedentary: 1.2,
+        light: 1.375,
+        moderate: 1.55,
+        active: 1.725,
+        "very active": 1.9,
+      }[activity];
+
+      const tdee = bmr * activityFactor;
+      const protein = Math.round((0.25 * tdee) / 4);
+      const carbs = Math.round((0.5 * tdee) / 4);
+      const fats = Math.round((0.25 * tdee) / 9);
+
+      document.getElementById("bmi").textContent = bmi.toFixed(1);
+      document.getElementById("bmr").textContent = `${Math.round(bmr)} kcal/day`;
+      document.getElementById("tdee").textContent = `${Math.round(tdee)} kcal/day`;
+      document.getElementById("protein").textContent = `${protein}g`;
+      document.getElementById("carbs").textContent = `${carbs}g`;
+      document.getElementById("fats").textContent = `${fats}g`;
+
+      const ctx = document.getElementById('macroChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: ['Protein', 'Carbs', 'Fats'],
+          datasets: [{
+            label: 'Macronutrients (g)',
+            data: [protein, carbs, fats],
+            backgroundColor: ['#4CAF50', '#2196F3', '#FF9800'],
+            borderColor: ['#333', '#333', '#333'],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          plugins: {
+            legend: {
+              labels: { color: 'white' }
+            }
+          }
+        }
+      });
+    };
+  </script>
+</body>
+</html>

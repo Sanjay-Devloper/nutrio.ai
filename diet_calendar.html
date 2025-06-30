@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Weekly Diet Calendar</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: white;
+      margin: 0;
+      overflow-x: hidden;
+    }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background-color: #1e1e1e;
+      padding: 20px;
+      transition: left 0.3s ease;
+      z-index: 1000;
+    }
+    .sidebar.active {
+      left: 0;
+    }
+    .sidebar h3 {
+      color: #4CAF50;
+      margin-bottom: 20px;
+    }
+    .sidebar a {
+      display: block;
+      margin-bottom: 12px;
+      color: white;
+      padding: 10px;
+      background: #222;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    .sidebar a:hover {
+      background-color: #444;
+    }
+    .menu-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      font-size: 20px;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    .content {
+      margin-left: 80px;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      table-layout: fixed;
+    }
+    th, td {
+      border: 1px solid #444;
+      padding: 12px;
+      text-align: center;
+      word-wrap: break-word;
+    }
+    th {
+      background-color: #16a34a;
+    }
+    td {
+      background-color: #111;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="menu-button" onclick="toggleSidebar()">☰</button>
+
+  <div id="sidebar" class="sidebar">
+    <h3>Menu</h3>
+    <a href="/grocery-list">Grocery List</a>
+    <a href="#">Activity Time</a>
+    <a href="/">Home</a>
+  </div>
+
+  <div class="content">
+    <h2>Weekly Diet Calendar</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Meal / Day</th>
+          <th>Monday</th>
+          <th>Tuesday</th>
+          <th>Wednesday</th>
+          <th>Thursday</th>
+          <th>Friday</th>
+          <th>Saturday</th>
+          <th>Sunday</th>
+        </tr>
+      </thead>
+      <tbody id="calendar-body">
+        <!-- Table rows dynamically inserted here -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("active");
+    }
+
+    async function loadCalendar() {
+      const res = await fetch("/static/result.txt");
+      const text = await res.text();
+      const rows = text.trim().split("\n");
+      const tbody = document.getElementById("calendar-body");
+      tbody.innerHTML = "";
+
+      rows.forEach(row => {
+        const parts = row.split(":");
+        if (parts.length === 2) {
+          const label = parts[0].trim();
+          const meals = parts[1].split("|").map(m => m.trim());
+          const tr = document.createElement("tr");
+
+          const th = document.createElement("th");
+          th.textContent = label;
+          tr.appendChild(th);
+
+          meals.forEach(meal => {
+            const td = document.createElement("td");
+            td.textContent = meal;
+            tr.appendChild(td);
+          });
+
+          tbody.appendChild(tr);
+        }
+      });
+    }
+
+    loadCalendar();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Diet Plan - Diet App</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background-color: #111;
+      margin: 0;
+      padding: 0;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .container {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    h1 {
+      color: #4CAF50;
+      margin-bottom: 1rem;
+    }
+
+    #dietResult {
+      margin-top: 2rem;
+      color: white;
+      white-space: pre-wrap;
+      font-size: 1.05rem;
+      text-align: left;
+      padding: 1rem 2rem;
+    }
+
+    button {
+      margin-top: 2rem;
+      padding: 12px 20px;
+      background-color: #666;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #444;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Your Personalized Diet Plan</h1>
+    <p>Based on your inputs, here's your recommended plan:</p>
+
+    <div id="dietResult">Generating your plan... Please wait.</div>
+
+    <button onclick="window.location.href='index.html'">Start Over</button>
+  </div>
+
+  <script>
+    async function fetchDietPlan() {
+      const userDataStr = localStorage.getItem("userData");
+      if (!userDataStr) {
+        document.getElementById("dietResult").innerText = "User data not found. Please go back and enter your details.";
+        return;
+      }
+
+      const userData = JSON.parse(userDataStr);
+
+      try {
+        const response = await fetch("http://localhost:8000/generate-diet", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(userData)
+        });
+
+        const result = await response.json();
+
+        // ✅ Debug log
+        console.log("API Response:", result);
+
+        // ✅ Set the diet plan to fill page
+        document.getElementById("dietResult").innerText = result.diet_plan || "No plan received.";
+      } catch (error) {
+        document.getElementById("dietResult").innerText = "Error: " + error.message;
+      }
+    }
+
+    fetchDietPlan();
+  </script>
+
+</body>
+</html>

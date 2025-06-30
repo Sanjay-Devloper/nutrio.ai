@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Goal Selection - Diet Plan App</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background-color: #000;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .goal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .goal-box, .diet-box {
+      padding: 1rem;
+      border-radius: 12px;
+      background-color: #2e2e2e;
+      color: #fff;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .goal-box:hover, .diet-box:hover {
+      background-color: #444;
+      transform: scale(1.02);
+    }
+
+    .goal-box.selected, .diet-box.selected {
+      border: 2px solid #4CAF50;
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .diet-section {
+      margin-top: 2rem;
+    }
+
+    input[type="text"] {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 0.7rem;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      background-color: #f4f4f4;
+      color: #000;
+    }
+
+    input:focus {
+      outline: none;
+      background-color: #fff;
+      border: 1px solid #999;
+    }
+
+    .container h1 {
+      color: #4CAF50;
+      font-size: 2.2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      margin-top: 2rem;
+      padding: 12px;
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #loader {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .spinner {
+      border: 6px solid #2e2e2e;
+      border-top: 6px solid #4CAF50;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 1rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      font-size: 1.2rem;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="formSection">
+    <h1>Choose Your Health Goal</h1>
+    <p>Select one goal from the options below:</p>
+
+    <div class="goal-grid">
+      <div class="goal-box" data-goal="muscle gain">Muscle Gain</div>
+      <div class="goal-box" data-goal="fat loss">Fat Loss</div>
+      <div class="goal-box" data-goal="glowing skin">Glowing Skin</div>
+      <div class="goal-box" data-goal="diabetes management">Diabetes Management</div>
+      <div class="goal-box" data-goal="healthy aging">Healthy Aging</div>
+    </div>
+
+    <div class="diet-section">
+      <p>Select your diet preference:</p>
+      <div class="goal-grid">
+        <div class="diet-box" data-diet="veg">Vegetarian</div>
+        <div class="diet-box" data-diet="non-veg">Non-Vegetarian</div>
+      </div>
+    </div>
+
+    <input id="allergies" type="text" placeholder="Any allergies? (optional)" />
+
+    <button id="continueBtn">Continue</button>
+  </div>
+
+  <div id="loader">
+    <div class="spinner"></div>
+    <div class="loading-text">Generating your personalized diet plan...</div>
+  </div>
+
+  <script>
+    const goalBoxes = document.querySelectorAll(".goal-box");
+    const dietBoxes = document.querySelectorAll(".diet-box");
+    let selectedGoal = "";
+    let selectedDiet = "";
+
+    goalBoxes.forEach(box => {
+      box.addEventListener("click", () => {
+        goalBoxes.forEach(b => b.classList.remove("selected"));
+        box.classList.add("selected");
+        selectedGoal = box.dataset.goal;
+      });
+    });
+
+    dietBoxes.forEach(box => {
+      box.addEventListener("click", () => {
+        dietBoxes.forEach(b => b.classList.remove("selected"));
+        box.classList.add("selected");
+        selectedDiet = box.dataset.diet;
+      });
+    });
+
+    document.getElementById("continueBtn").addEventListener("click", () => {
+      const userDataStr = localStorage.getItem("userData");
+      if (!userDataStr) {
+        alert("User data not found. Please fill in your details first.");
+        window.location.href = "index.html";
+        return;
+      }
+
+      if (!selectedGoal || !selectedDiet) {
+        alert("Please select your goal and diet preference.");
+        return;
+      }
+
+      document.getElementById("formSection").style.display = "none";
+      document.getElementById("loader").style.display = "flex";
+
+      const allergies = document.getElementById("allergies").value.trim();
+      const userData = JSON.parse(userDataStr);
+
+      const payload = {
+        ...userData,
+        goal: selectedGoal,
+        dietType: selectedDiet,
+        allergies: allergies
+      };
+
+      fetch("http://localhost:8000/generate-diet", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log("Success:", data);
+        window.location.href = "static/diet_calendar.html";
+      })
+      .catch(err => {
+        console.error("Error:", err);
+        alert("Something went wrong. Please try again.");
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("formSection").style.display = "block";
+      });
+    });
+  </script>
+</body>
+</html>

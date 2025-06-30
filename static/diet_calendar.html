@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Weekly Diet Calendar</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: white;
+      margin: 0;
+      overflow-x: hidden;
+    }
+    .sidebar a {
+  display: block;
+  padding: 10px;
+  margin: 5px 0;
+  background-color: #222;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.sidebar a:hover {
+  background-color: #444;
+}
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background-color: #1e1e1e;
+      padding: 20px;
+      transition: left 0.3s ease;
+      z-index: 1000;
+    }
+    .sidebar.active {
+      left: 0;
+    }
+    .sidebar h3 {
+      color: #4CAF50;
+      margin-bottom: 20px;
+    }
+    .sidebar a {
+      display: block;
+      margin-bottom: 12px;
+      color: white;
+      padding: 10px;
+      background: #222;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    .sidebar a:hover {
+      background-color: #444;
+    }
+    .menu-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      font-size: 20px;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    .content {
+      margin-left: 80px;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      table-layout: fixed;
+    }
+    th, td {
+      border: 1px solid #444;
+      padding: 12px;
+      text-align: center;
+      word-wrap: break-word;
+    }
+    th {
+      background-color: #16a34a;
+    }
+    td {
+      background-color: #111;
+    }
+    body {
+  font-family: Arial, sans-serif;
+  background-color: #111;
+  color: white;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.container {
+  margin-left: 60px; /* leave space for the menu button */
+  padding: 20px;
+  padding-right: 0;
+}
+
+h2 {
+  text-align: center;
+  color: white;
+  margin: 20px 0;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+  background-color: #000;
+  margin: 0;
+}
+
+th, td {
+  border: 1px solid #444;
+  padding: 12px;
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+}
+
+th {
+  background-color: #16a34a;
+}
+
+  </style>
+</head>
+<body>
+
+  <button class="menu-button" onclick="toggleSidebar()">☰</button>
+  <div id="sidebar" class="sidebar">
+  <h3>Menu</h3>
+
+  <!-- Grocery List (New Tab) -->
+  <a href="grocery_list.html" target="_blank">🛒 Grocery List</a>
+
+  <!-- Profile (Placeholder) -->
+  <a href="body-facts.html" target="_blank">👤 Profile</a>
+
+  <!-- Home Page -->
+  <a href="index.html">🏠 Home</a>
+</div>
+
+
+  <div class="content">
+    <h2>Weekly Diet Calendar</h2>
+    <table>
+      <tr>
+        <th>Meal / Day</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th><th>Saturday</th><th>Sunday</th></tr><tr><th>Early Morning</th><td>Spiced Milk with Turmeric</td><td>Spiced Milk with Saffron</td><td>Spiced Milk with Ginger</td><td>Spiced Milk with cardamom</td><td>Spiced Milk with Turmeric</td><td>Spiced Milk with Saffron</td><td>Spiced Milk with Cinnamon</td></tr><tr><th>Breakfast</th><td>Egg Burji with Whole Wheat Toast</td><td>Oats with Milk and Seeds (Chia/Flax)</td><td>Vegetable Omelette with Whole Wheat Chapati</td><td>Idli with Sambar and Chutney</td><td>Scrambled Eggs with Spinach and Whole Wheat Toast</td><td>Dosa with Sambar and Chutney</td><td>Paratha with Yogurt</td></tr><tr><th>Mid-Morning</th><td>Greek Yogurt with Berries</td><td>Peanut Butter (ensure nut free) Sandwich on Whole Wheat Bread</td><td>Fruit Salad (apple, orange, banana)</td><td>Boiled Eggs (2)</td><td>Greek Yogurt with Honey</td><td>Apple slices with a spoonful of Peanut Butter (ensure nut free)</td><td>Fruit Salad (grapes, banana, kiwi)</td></tr><tr><th>Lunch</th><td>Chicken Curry with Brown Rice and Mixed Vegetables</td><td>Mutton Rogan Josh with Brown Rice and Salad</td><td>Dal Makhani with Brown Rice and Palak Paneer</td><td>Chicken Tikka Masala with Brown Rice and Raita</td><td>Fish Fry with Brown Rice and Salad</td><td>Chicken Biryani with Raita</td><td>Rajma Chawal (Kidney beans and Rice)</td></tr><tr><th>Evening Snack</th><td>Hard-boiled Eggs and a Banana</td><td>Chicken Salad</td><td>Cottage Cheese (Paneer) cubes</td><td>Mixed Nuts (Ensure Nut Free alternative e.g. sunflower seeds, pumpkin seeds) and Fruit</td><td>Chicken Breast</td><td>Hard-boiled eggs and a pear</td><td>Cottage Cheese (Paneer) with tomato slices</td></tr><tr><th>Pre-Dinner</th><td>Protein Shake (Whey)</td><td>Banana with a spoonful of peanut butter(ensure nut free)</td><td>Protein Shake (Whey)</td><td>Peanut butter(ensure nut free) on Whole Wheat Crackers</td><td>Protein Shake (Whey)</td><td>Banana with a spoonful of peanut butter (ensure nut free)</td><td>Protein Shake (Whey)</td></tr><tr><th>Dinner</th><td>Fish Tandoori with Roti</td><td>Chicken Stir-fry with Vegetables and Quinoa</td><td>Shrimp Curry with Brown Rice and Green Beans</td><td>Lamb Curry with Whole Wheat Roti</td><td>Mutton Keema with Brown Rice</td><td>Tandoori Chicken with Brown Rice and Salad</td><td>Chicken Curry with Whole Wheat Roti and Mixed Vegetables</td></tr>
+    </table>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("active");
+    }
+  </script>
+
+</body>
+</html>

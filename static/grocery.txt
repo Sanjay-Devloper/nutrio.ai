@@ -1,0 +1,59 @@
+Weekly Grocery List (Categorized)
+==============================
+# Fruits
+Apple - 2
+Banana - 5
+Berries - 1
+Grapes - 1
+Orange - 1
+Pear - 1
+
+# Dairy
+Butter - 5
+Cheese - 2
+Cottage Cheese - 2
+Greek Yogurt - 2
+Milk - 8
+Paneer - 3
+Yogurt - 3
+
+# Protein
+Chicken - 8
+Dal - 1
+Egg - 5
+Fish - 2
+Keema - 1
+Mutton - 2
+Omelette - 1
+Peanut - 5
+Protein Shake - 4
+Whey - 4
+
+# Grains
+Bread - 1
+Chapati - 1
+Dosa - 1
+Idli - 1
+Oats - 1
+Paratha - 1
+Rice - 9
+Roti - 3
+Whole Wheat Bread - 1
+
+# Vegetables
+Beans - 2
+Green Beans - 1
+Spinach - 1
+Tomato - 1
+
+# Nuts & Seeds
+Chia - 1
+Peanut Butter - 5
+Seeds - 2
+Sunflower Seed - 1
+
+# Others
+Ginger - 1
+Honey - 1
+Vegetables - 3
+
